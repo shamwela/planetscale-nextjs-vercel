@@ -4,24 +4,24 @@ import { PSDB } from 'planetscale-node'
 
 const conn = new PSDB('main')
 
-export default async (req, res) => {
+export default async (request, response) => {
   const {
     body: { email, name, password },
     method,
-  } = req
+  } = request
   switch (method) {
     case 'POST':
-      const [rows, fields] = await conn.query(
+      await conn.query(
         `insert into users (email, name, password) values ('${email}', '${name}', '${password}')`
       )
-      res.statusCode = 201
-      res.json({ email, name })
+      response.statusCode = 201
+      response.json({ email, name })
       break
     case 'GET':
       try {
         const [getRows, _] = await conn.query('select * from users')
-        res.statusCode = 200
-        res.json(getRows)
+        response.statusCode = 200
+        response.json(getRows)
       } catch (e) {
         error = new Error('An error occurred while connecting to the database')
         error.status = 500
@@ -30,10 +30,9 @@ export default async (req, res) => {
         }
         throw error
       }
-
       break
     default:
-      res.setHeader('Allow', ['GET', 'PUT'])
-      res.status(405).end(`Method ${method} Not Allowed`)
+      response.setHeader('Allow', ['POST', 'GET'])
+      response.status(405).end(`${method} method isn't allowed.`)
   }
 }
