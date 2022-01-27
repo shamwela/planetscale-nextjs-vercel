@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import Filter from 'bad-words'
 import useSWR from 'swr'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
@@ -16,7 +15,6 @@ export default function Home() {
     users: [],
   })
   const { users } = state
-  const filter = new Filter()
 
   useEffect(() => {
     if (fetchedData) {
@@ -41,16 +39,16 @@ export default function Home() {
       </div>
     )
   }
-  
-  const handleOnChange = (event) => {
-    const { target } = event
 
-    if (target.name == 'email') {
-      setState((prev) => ({ ...prev, email: target.value }))
-    } else if (target.name == 'name') {
-      setState((prev) => ({ ...prev, name: target.value }))
-    } else if (target.name == 'password') {
-      setState((prev) => ({ ...prev, password: target.value }))
+  const handleOnChange = (event) => {
+    const { name, value } = event.target
+
+    if (name == 'email') {
+      setState((prev) => ({ ...prev, email: value }))
+    } else if (name == 'name') {
+      setState((prev) => ({ ...prev, name: value }))
+    } else if (name == 'password') {
+      setState((prev) => ({ ...prev, password: value }))
     }
   }
 
@@ -58,11 +56,13 @@ export default function Home() {
     setLoading(true)
     event.preventDefault()
 
+    const { email, password, name } = state
+
     const res = await fetch('api/users', {
       body: JSON.stringify({
-        email: filter.clean(state.email),
-        password: filter.clean(state.password),
-        name: filter.clean(state.name),
+        email,
+        password,
+        name,
       }),
       headers: {
         'Content-Type': 'application/json',
