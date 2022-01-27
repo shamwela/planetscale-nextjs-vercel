@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
 import { PSDB } from 'planetscale-node'
 
 const conn = new PSDB('main')
@@ -6,7 +7,7 @@ const conn = new PSDB('main')
 export default async (req, res) => {
   const {
     body: { email, name, password },
-    method
+    method,
   } = req
   switch (method) {
     case 'POST':
@@ -24,7 +25,9 @@ export default async (req, res) => {
       } catch (e) {
         error = new Error('An error occurred while connecting to the database')
         error.status = 500
-        error.info = { message: 'An error occurred while connecting to the database' }
+        error.info = {
+          message: 'An error occurred while connecting to the database',
+        }
         throw error
       }
 

@@ -4,7 +4,7 @@ export default function Login() {
   const [state, setState] = useState({
     email: null,
     name: null,
-    password: null
+    password: null,
   })
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -28,12 +28,12 @@ export default function Login() {
 
     const res = await fetch('api/users', {
       body: JSON.stringify({
-        ...state
+        ...state,
       }),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      method: 'POST'
+      method: 'POST',
     })
 
     if (res.status == 201) {
@@ -55,7 +55,9 @@ export default function Login() {
             src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
             alt='Workflow'
           />
-          <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>Sign up</h2>
+          <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+            Sign up
+          </h2>
         </div>
 
         {success ? (
@@ -65,7 +67,9 @@ export default function Login() {
         ) : (
           <>
             {error && (
-              <div className='flex items-center font-medium tracking-wide text-red-500 bg-red-100'>{error}</div>
+              <div className='flex items-center font-medium tracking-wide text-red-500 bg-red-100'>
+                {error}
+              </div>
             )}
             <form className='mt-8 space-y-6' onSubmit={registerUser}>
               <input type='hidden' name='remember' value='true' />
@@ -124,13 +128,19 @@ export default function Login() {
                     type='checkbox'
                     className='h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
                   />
-                  <label htmlFor='remember_me' className='ml-2 block text-sm text-gray-900'>
+                  <label
+                    htmlFor='remember_me'
+                    className='ml-2 block text-sm text-gray-900'
+                  >
                     Remember me
                   </label>
                 </div>
 
                 <div className='text-sm'>
-                  <a href='#' className='font-medium text-indigo-600 hover:text-indigo-500'>
+                  <a
+                    href='#'
+                    className='font-medium text-indigo-600 hover:text-indigo-500'
+                  >
                     Forgot your password?
                   </a>
                 </div>
