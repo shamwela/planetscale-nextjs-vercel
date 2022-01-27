@@ -71,8 +71,8 @@ export default function Home() {
     })
 
     if (res.status == 201) {
-      const json = await res.json()
-      setState((prev) => ({ ...prev, users: [json, ...users] }))
+      const result = await res.json()
+      setState((prev) => ({ ...prev, users: [result, ...users] }))
     } else {
       const error = await res.text()
       setRegisterError(error)
@@ -96,9 +96,9 @@ export default function Home() {
           <input type='hidden' name='remember' value='true' />
 
           <div>
-            <h1 className='text-lg font-semibold text-primary'>Users demo</h1>
+            <h1 className='text-5xl font-bold text-primary'>Users demo</h1>
             <p className='mb-3 text-secondary'>
-              This app is deployed to vercel and connected to your PlanetScale
+              This app is deployed to Vercel and connected to your PlanetScale
               database. The example project can be found{' '}
               <a
                 className='text-blue'
